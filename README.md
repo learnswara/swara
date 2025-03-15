@@ -1,2 +1,0 @@
-# swara
-Swara App
