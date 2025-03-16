@@ -123,6 +123,7 @@ class _CreateClassroomScreenState extends State<CreateClassroomScreen> {
                     CreateClassroomScreenCSS.smallSpacing,
                     TextField(
                       controller: _nameController,
+                      style: CreateClassroomScreenCSS.inputTextStyle,
                       decoration: CreateClassroomScreenCSS.inputDecoration(
                         'Add a name for your class',
                       ),
@@ -140,6 +141,7 @@ class _CreateClassroomScreenState extends State<CreateClassroomScreen> {
                     CreateClassroomScreenCSS.smallSpacing,
                     TextField(
                       controller: _descriptionController,
+                      style: CreateClassroomScreenCSS.inputTextStyle,
                       maxLength: 500,
                       maxLines: 4,
                       decoration: CreateClassroomScreenCSS.descriptionDecoration(

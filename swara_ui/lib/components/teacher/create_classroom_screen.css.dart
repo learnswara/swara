@@ -46,6 +46,11 @@ class CreateClassroomScreenCSS {
     fontSize: 16,
   );
 
+  static const inputTextStyle = TextStyle(
+    color: Colors.black,
+    fontSize: 16,
+  );
+
   // Input decorations
   static InputDecoration inputDecoration(String hintText) {
     return InputDecoration(
