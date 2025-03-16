@@ -66,11 +66,11 @@ class _CreateClassroomScreenState extends State<CreateClassroomScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'Create a ${widget.isGroup ? "group" : ""} classroom',
+          'Create a classroom',
           style: const TextStyle(
             color: Colors.black,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+            fontSize: 24,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
@@ -81,9 +81,9 @@ class _CreateClassroomScreenState extends State<CreateClassroomScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'You can create a classroom to accommodate ${widget.isGroup ? "multiple" : "a"} student${widget.isGroup ? "s" : ""}.',
+                'You can create a classroom to accommodate 1 or more students.',
                 style: const TextStyle(
-                  color: Colors.grey,
+                  color: Colors.black87,
                   fontSize: 16,
                 ),
               ),
@@ -95,6 +95,7 @@ class _CreateClassroomScreenState extends State<CreateClassroomScreen> {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
+                  color: Colors.black,
                 ),
               ),
               const SizedBox(height: 8),
@@ -102,14 +103,20 @@ class _CreateClassroomScreenState extends State<CreateClassroomScreen> {
                 controller: _nameController,
                 decoration: InputDecoration(
                   hintText: 'Add a name for your class',
+                  hintStyle: TextStyle(color: Colors.grey[500]),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(color: Colors.grey),
+                    borderSide: BorderSide(color: Colors.grey[300]!),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(color: Colors.grey),
+                    borderSide: BorderSide(color: Colors.grey[300]!),
                   ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: Colors.grey[400]!),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 ),
               ),
               const SizedBox(height: 24),
@@ -123,12 +130,13 @@ class _CreateClassroomScreenState extends State<CreateClassroomScreen> {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
+                      color: Colors.black,
                     ),
                   ),
                   Text(
-                    '${_descriptionController.text.length}/500',
-                    style: const TextStyle(
-                      color: Colors.grey,
+                    '(Optional)',
+                    style: TextStyle(
+                      color: Colors.grey[600],
                       fontSize: 14,
                     ),
                   ),
@@ -141,15 +149,22 @@ class _CreateClassroomScreenState extends State<CreateClassroomScreen> {
                 maxLines: 4,
                 decoration: InputDecoration(
                   hintText: 'Tell us more about this class',
-                  counterText: '',
+                  hintStyle: TextStyle(color: Colors.grey[500]),
+                  counterText: '${_descriptionController.text.length}/500',
+                  counterStyle: TextStyle(color: Colors.grey[600]),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(color: Colors.grey),
+                    borderSide: BorderSide(color: Colors.grey[300]!),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(color: Colors.grey),
+                    borderSide: BorderSide(color: Colors.grey[300]!),
                   ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: Colors.grey[400]!),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 ),
                 onChanged: (value) => setState(() {}),
               ),
@@ -161,11 +176,13 @@ class _CreateClassroomScreenState extends State<CreateClassroomScreen> {
                 child: ElevatedButton(
                   onPressed: _isLoading ? null : _saveClassroom,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey,
+                    backgroundColor: Colors.grey[400],
+                    foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(8),
                     ),
+                    elevation: 0,
                   ),
                   child: _isLoading
                       ? const SizedBox(
@@ -178,11 +195,13 @@ class _CreateClassroomScreenState extends State<CreateClassroomScreen> {
                         )
                       : const Text(
                           'Save classroom',
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                 ),
               ),
-              const SizedBox(height: 16),
 
               // Add student button
               Center(
@@ -190,10 +209,12 @@ class _CreateClassroomScreenState extends State<CreateClassroomScreen> {
                   onPressed: () {
                     // TODO: Implement add student functionality
                   },
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.grey[600],
+                  ),
                   child: const Text(
                     'Add student',
                     style: TextStyle(
-                      color: Colors.grey,
                       fontSize: 16,
                     ),
                   ),
