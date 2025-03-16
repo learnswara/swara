@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../theme.dart';
 import 'create_classroom_screen.css.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class CreateClassroomScreen extends StatefulWidget {
   final bool isGroup;
@@ -37,10 +39,43 @@ class _CreateClassroomScreenState extends State<CreateClassroomScreen> {
     setState(() => _isLoading = true);
 
     try {
-      // TODO: Implement API call
-      await Future.delayed(const Duration(seconds: 1)); // Simulate API call
+      final response = await http.post(
+        Uri.parse('http://localhost:5000/api/classroom/'),
+        headers: {
+          'Content-Type': 'application/json',
+          'accept': 'application/json',
+        },
+        body: jsonEncode({
+          'name': _nameController.text.trim(),
+          'description': _descriptionController.text.trim(),
+          'is_group': widget.isGroup,
+        }),
+      );
+
       if (mounted) {
-        Navigator.pop(context, true); // Return true to indicate success
+        if (response.statusCode == 201) {
+          // Show success message
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Classroom created successfully'),
+              backgroundColor: Colors.green,
+            ),
+          );
+          // Close the screen after a short delay to allow the toast to be seen
+          await Future.delayed(const Duration(milliseconds: 500));
+          if (mounted) {
+            Navigator.pop(context, true);
+          }
+        } else {
+          // Handle error
+          final errorData = jsonDecode(response.body);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(errorData['message'] ?? 'Failed to create classroom'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
       }
     } catch (e) {
       if (mounted) {
@@ -72,72 +107,72 @@ class _CreateClassroomScreenState extends State<CreateClassroomScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: CreateClassroomScreenCSS.screenPadding,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'You can create a classroom to accommodate 1 or more students.',
-                style: CreateClassroomScreenCSS.subtitleStyle,
-              ),
+              child: Padding(
+                padding: CreateClassroomScreenCSS.screenPadding,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'You can create a classroom to accommodate 1 or more students.',
+                      style: CreateClassroomScreenCSS.subtitleStyle,
+                    ),
+                    CreateClassroomScreenCSS.largeSpacing,
+
+                    // Class name field
+                    const Text('Class name', style: CreateClassroomScreenCSS.labelStyle),
+                    CreateClassroomScreenCSS.smallSpacing,
+                    TextField(
+                      controller: _nameController,
+                      decoration: CreateClassroomScreenCSS.inputDecoration(
+                        'Add a name for your class',
+                      ),
+                    ),
+                    CreateClassroomScreenCSS.mediumSpacing,
+
+                    // Description field
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('Description', style: CreateClassroomScreenCSS.labelStyle),
+                        Text('(Optional)', style: CreateClassroomScreenCSS.optionalStyle),
+                      ],
+                    ),
+                    CreateClassroomScreenCSS.smallSpacing,
+                    TextField(
+                      controller: _descriptionController,
+                      maxLength: 500,
+                      maxLines: 4,
+                      decoration: CreateClassroomScreenCSS.descriptionDecoration(
+                        'Tell us more about this class',
+                        '${_descriptionController.text.length}/500',
+                      ),
+                      onChanged: (value) => setState(() {}),
+                    ),
               CreateClassroomScreenCSS.largeSpacing,
 
-              // Class name field
-              const Text('Class name', style: CreateClassroomScreenCSS.labelStyle),
-              CreateClassroomScreenCSS.smallSpacing,
-              TextField(
-                controller: _nameController,
-                decoration: CreateClassroomScreenCSS.inputDecoration(
-                  'Add a name for your class',
-                ),
-              ),
-              CreateClassroomScreenCSS.mediumSpacing,
-
-              // Description field
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text('Description', style: CreateClassroomScreenCSS.labelStyle),
-                  Text('(Optional)', style: CreateClassroomScreenCSS.optionalStyle),
-                ],
-              ),
-              CreateClassroomScreenCSS.smallSpacing,
-              TextField(
-                controller: _descriptionController,
-                maxLength: 500,
-                maxLines: 4,
-                decoration: CreateClassroomScreenCSS.descriptionDecoration(
-                  'Tell us more about this class',
-                  '${_descriptionController.text.length}/500',
-                ),
-                onChanged: (value) => setState(() {}),
-              ),
-              CreateClassroomScreenCSS.largeSpacing,
-
-              // Save button
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
+                // Save button
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
                   onPressed: _isLoading ? null : _saveClassroom,
                   style: CreateClassroomScreenCSS.saveButtonStyle,
-                  child: _isLoading
-                      ? const SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                          ),
-                        )
+                    child: _isLoading
+                        ? const SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                            ),
+                          )
                       : const Text(
-                          'Save classroom',
+                            'Save classroom',
                           style: CreateClassroomScreenCSS.saveButtonTextStyle,
-                        ),
+                          ),
+                  ),
                 ),
-              ),
 
-              // Add student button
+                // Add student button
               Center(
                 child: TextButton(
                   onPressed: () {
@@ -148,11 +183,11 @@ class _CreateClassroomScreenState extends State<CreateClassroomScreen> {
                     'Add student',
                     style: CreateClassroomScreenCSS.addStudentStyle,
                   ),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
       ),
     );
   }
