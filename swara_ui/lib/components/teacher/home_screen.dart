@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../common/custom_bottom_sheet.dart';
 import '../common/custom_snackbar.dart';
 import 'home_screen.css.dart';
+import 'create_classroom_screen.dart';
 
 class TeacherHomeScreen extends StatefulWidget {
   const TeacherHomeScreen({super.key});
@@ -37,7 +38,7 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
               ],
             ),
           ),
-          
+
           // Main content
           Expanded(
             child: Container(
@@ -65,7 +66,7 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                           ),
                         ),
                         HomeScreenCSS.largeSpacing,
-                        
+
                         // No classrooms yet text
                         Text(
                           'No classrooms yet',
@@ -73,7 +74,7 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                           semanticsLabel: 'No Classrooms Yet',
                         ),
                         HomeScreenCSS.smallSpacing,
-                        
+
                         // Description text
                         Text(
                           'Create a classroom and add, students\nand lessons to get started.',
@@ -81,7 +82,7 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                           style: HomeScreenCSS.emptyDescriptionStyle,
                         ),
                         HomeScreenCSS.extraLargeSpacing,
-                        
+
                         // Create classroom button
                         SizedBox(
                           width: HomeScreenCSS.buttonWidth,
@@ -171,11 +172,15 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
       ],
     ).then((classroomType) {
       if (classroomType != null && mounted) {
-        CustomSnackbar.show(
-          context: context,
-          message: 'Selected: $classroomType classroom',
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CreateClassroomScreen(
+              isGroup: classroomType == 'group',
+            ),
+          ),
         );
       }
     });
   }
-} 
+}
