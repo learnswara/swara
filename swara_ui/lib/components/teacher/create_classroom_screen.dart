@@ -40,7 +40,7 @@ class _CreateClassroomScreenState extends State<CreateClassroomScreen> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://localhost:5000/api/classroom/'),
+        Uri.parse('http://localhost:5050/api/classroom/'),
         headers: {
           'Content-Type': 'application/json',
           'accept': 'application/json',
