@@ -15,10 +15,10 @@ class AuthService extends ChangeNotifier {
 
   Future<void> login() async {
     _credentials = await auth0.webAuthentication(
-      scheme: 'https'
+      scheme: 'com.example.swara'
     ).login(
-      useHTTPS: true,
-      redirectUrl: 'https://dev-u44taemtvvs20a0h.us.auth0.com/android/com.example.swara/callback'
+      useHTTPS: false,
+      redirectUrl: 'com.example.swara://dev-u44taemtvvs20a0h.us.auth0.com/android/com.example.swara/callback'
     );
     notifyListeners();
   }

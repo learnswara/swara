@@ -34,13 +34,13 @@
                     android:scheme="https"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
                 <data
                     android:host="dev-u44taemtvvs20a0h.us.auth0.com"
                     android:pathPrefix="/android/com.example.swara/callback"
-                    android:scheme="com.example.swara"/>
+                    android:scheme="com.example.swara" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
