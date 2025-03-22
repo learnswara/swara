@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_svg: ^2.0.10+1
   http: ^1.1.0  # or the latest version
+  auth0_flutter: ^1.9.0
 
 dev_dependencies:
   flutter_test:

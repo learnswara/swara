@@ -2,9 +2,52 @@ import 'package:flutter/material.dart';
 import '../common/gradient_background.dart';
 import '../common/social_button.dart';
 import 'login_screen.css.dart';
+import 'package:auth0_flutter/auth0_flutter.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  Credentials? _credentials;
+  late Auth0 auth0;
+
+  @override
+  void initState() {
+    super.initState();
+    auth0 = Auth0('dev-u44taemtvvs20a0h.us.auth0.com', '4lSI9gZZLnS3oDCjd6Jw1e4JDP10sBRb');
+  }
+
+  Future<void> _login() async {
+    try {
+      final credentials = await auth0.webAuthentication(
+        scheme: 'https'
+      ).login(
+        useHTTPS: true,
+        redirectUrl: 'https://dev-u44taemtvvs20a0h.us.auth0.com/android/com.example.swara/callback'
+      );
+
+      setState(() {
+        _credentials = credentials;
+      });
+
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, '/teacher/home');
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Login failed: ${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +81,7 @@ class LoginScreen extends StatelessWidget {
                     style: LoginScreenCSS.subheading,
                   ),
                   LoginScreenCSS.largeWidgetSpacing,
-                  
+
                   // Email field
                   TextField(
                     style: LoginScreenCSS.textWhite,
@@ -48,7 +91,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   LoginScreenCSS.widgetSpacing,
-                  
+
                   // Password field
                   TextField(
                     obscureText: true,
@@ -59,7 +102,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   LoginScreenCSS.smallWidgetSpacing,
-                  
+
                   // Forgot password
                   Align(
                     alignment: Alignment.centerRight,
@@ -72,17 +115,15 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   LoginScreenCSS.widgetSpacing,
-                  
+
                   // Login button
                   ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/teacher/home');
-                    },
+                    onPressed: _login,
                     style: LoginScreenCSS.loginButton,
-                    child: const Text('Login'),
+                    child: const Text('Login with Auth0'),
                   ),
                   LoginScreenCSS.dividerSpacing,
-                  
+
                   // Or continue with
                   Row(
                     children: [
@@ -112,7 +153,7 @@ class LoginScreen extends StatelessWidget {
                     ],
                   ),
                   LoginScreenCSS.largeWidgetSpacing,
-                  
+
                   // Social login buttons
                   Row(
                     mainAxisAlignment: LoginScreenCSS.rowMainAxisAlignment,
@@ -131,7 +172,7 @@ class LoginScreen extends StatelessWidget {
                     ],
                   ),
                   LoginScreenCSS.largeWidgetSpacing,
-                  
+
                   // Sign up link
                   Row(
                     mainAxisAlignment: LoginScreenCSS.rowMainAxisAlignment,
@@ -159,4 +200,4 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
-} 
+}

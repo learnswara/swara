@@ -45,5 +45,24 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.example.swara</string>
+				<string>https</string>
+			</array>
+			<key>CFBundleURLName</key>
+			<string>auth0</string>
+		</dict>
+	</array>
+	<key>CFBundleTypeRole</key>
+	<string>None</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>https</string>
+		<string>com.example.swara</string>
+	</array>
 </dict>
 </plist>

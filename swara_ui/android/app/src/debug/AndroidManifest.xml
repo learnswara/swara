@@ -4,4 +4,30 @@
          to allow setting breakpoints, to provide hot reload, etc.
     -->
     <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <!-- Auth0 callback configuration -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="dev-u44taemtvvs20a0h.us.auth0.com"
+                    android:pathPrefix="/android/com.example.swara/callback"
+                    android:scheme="https" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="dev-u44taemtvvs20a0h.us.auth0.com"
+                    android:pathPrefix="/android/com.example.swara/callback"
+                    android:scheme="com.example.swara" />
+            </intent-filter>
+        </activity>
+    </application>
 </manifest>
