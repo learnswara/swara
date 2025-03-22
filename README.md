@@ -1,7 +1,7 @@
 To run the server, run the following command:
 ```
 cd swara_server
-python app.py
+python server.py
 ```
 or
 ```
