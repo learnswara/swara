@@ -1,13 +1,47 @@
 import 'package:flutter/material.dart';
 import '../common/gradient_background.dart';
 import '../common/social_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 import 'login_screen.css.dart';
+
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+     // Google Sign-In logic
+    Future<User?> signInWithGoogle() async {
+      try {
+        // Trigger the Google Sign-In flow
+        final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+        if (googleUser == null) {
+          return null; // The user canceled the login
+        }
+
+        // Obtain the authentication details from the request
+        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+        // Create a new credential using the obtained tokens
+        final OAuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+
+        // Sign in to Firebase with the Google credentials
+        final UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+
+        // Return the signed-in user
+        return userCredential.user;
+      } catch (e) {
+        print('Error during Google Sign-In: $e');
+        return null;
+      }
+    }
+
     return Scaffold(
       extendBodyBehindAppBar: LoginScreenCSS.extendBodyBehindAppBar,
       backgroundColor: LoginScreenCSS.scaffoldBackgroundColor,
@@ -120,7 +154,16 @@ class LoginScreen extends StatelessWidget {
                       SocialButton(
                         icon: Icons.g_mobiledata,
                         label: 'Google',
-                        onPressed: () {},
+                        onPressed: () async {
+                          print('Inside on pressed');
+                          User? user = await signInWithGoogle();
+                          if (user != null) {
+                            print('Logged in as ${user.displayName}');
+                            Navigator.pushReplacementNamed(context, '/teacher/home');
+                          } else {
+                              print('Google Sign-In failed');
+                          }
+                        },
                       ),
                       LoginScreenCSS.socialButtonSpacing,
                       SocialButton(

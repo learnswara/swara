@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "640314669759",
+    "project_id": "swara-auth",
+    "storage_bucket": "swara-auth.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640314669759:android:3e5b931b89a96de084e40a",
+        "android_client_info": {
+          "package_name": "com.example.auth_login"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "640314669759-nbjcgrdn45kkr0359ofj586fv0t6loa7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeFCV0ISuTHnKGw6dS4Q-44Ued0kNF8Cw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "640314669759-nbjcgrdn45kkr0359ofj586fv0t6loa7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "640314669759-q7c7c376a94cp7ndceef02dhe5rfd7if.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.authLogin"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640314669759:android:9ff0f3c5991614c684e40a",
+        "android_client_info": {
+          "package_name": "com.example.swara"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "640314669759-nbjcgrdn45kkr0359ofj586fv0t6loa7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeFCV0ISuTHnKGw6dS4Q-44Ued0kNF8Cw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "640314669759-nbjcgrdn45kkr0359ofj586fv0t6loa7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "640314669759-q7c7c376a94cp7ndceef02dhe5rfd7if.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.authLogin"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
